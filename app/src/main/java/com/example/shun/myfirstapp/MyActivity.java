@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.view.View.OnClickListener;
 
 
 public class MyActivity extends ActionBarActivity {
@@ -16,6 +18,10 @@ public class MyActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
+
+        // Set OnClick
+        Button button = (Button) findViewById(R.id.button_send);
+        button.setOnClickListener(onclick);
     }
 
     @Override
@@ -40,11 +46,16 @@ public class MyActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void sendMessage(View view){
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
-        EditText editText = (EditText) findViewById(R.id.edit_message);
-        String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);
-    }
+    OnClickListener onclick = new OnClickListener(){
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(MyActivity.this, DisplayMessageActivity.class);
+            EditText editText = (EditText) findViewById(R.id.edit_message);
+            String message = editText.getText().toString();
+            intent.putExtra(EXTRA_MESSAGE, message);
+            startActivity(intent);
+        }
+    };
+
 }
