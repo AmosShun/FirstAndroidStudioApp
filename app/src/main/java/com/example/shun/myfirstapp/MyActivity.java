@@ -5,10 +5,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 
 
 public class MyActivity extends ActionBarActivity {
@@ -19,9 +21,10 @@ public class MyActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
 
-        // Set OnClick
+        // Set OnClickListener
         Button button = (Button) findViewById(R.id.button_send);
-        button.setOnClickListener(onclick);
+        //button.setOnClickListener(onclick);
+        button.setOnTouchListener(ontouch);
     }
 
     @Override
@@ -55,6 +58,22 @@ public class MyActivity extends ActionBarActivity {
             String message = editText.getText().toString();
             intent.putExtra(EXTRA_MESSAGE, message);
             startActivity(intent);
+        }
+    };
+
+    OnTouchListener ontouch = new OnTouchListener(){
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            int action = event.getAction();
+            if(action == MotionEvent.ACTION_UP) {
+                Intent intent = new Intent(MyActivity.this, DisplayMessageActivity.class);
+                EditText editText = (EditText) findViewById(R.id.edit_message);
+                String message = editText.getText().toString();
+                intent.putExtra(EXTRA_MESSAGE, message);
+                startActivity(intent);
+            }
+            return false;
         }
     };
 
